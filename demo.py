@@ -10,20 +10,21 @@ from config import *
 def main():
 
     iw_ssim = IW_SSIM(iw_flag=args.iw_flag, Nsc=args.Nsc, blSzX=args.blSzX,
-                      blSzY=args.blSzY, parent=args.parent, sigma_nsq=args.sigma_nsq, 
+                      blSzY=args.blSzY, parent=args.parent, sigma_nsq=args.sigma_nsq,
                       use_cuda=args.use_cuda, use_double=args.use_double)
-    
+
     iw_raw_scores = []
     for k in range(num_run):
         if k == 1:
             start = time.time()
         for i in range(num_imgs):
             iw_score = iw_ssim.test(rgb2gray(imgos[i]), rgb2gray(imgds[i]))    # test one image
+            print("current ", k, " score: ", iw_score)
     end = time.time()
     print('Avg time for one image', (end-start)/((num_run-1)*num_imgs), 's')
     print('Total time:', end-start, 's')
 
-    
+
 if __name__ == "__main__":
 
     parser = ArgumentParser(description='PyTorch IW-SSIM')
@@ -58,4 +59,3 @@ if __name__ == "__main__":
 
     main()
 
-    
